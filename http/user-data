@@ -1,0 +1,56 @@
+#cloud-config
+autoinstall:
+    version: 1
+    early-commands:
+        # Stop ssh for packer
+        - sudo systemctl stop ssh
+    locale: en_US
+    keyboard:
+        layout: en
+        variant: us
+    identity:
+        hostname: ubuntu-server
+        username: ubuntu
+        password: "ubuntu"
+    ssh:
+        install-server: yes
+        allow-pw: yes
+        authorized-keys:
+            - #ssh-rsa AAAAB3Nz...
+            - #ssh-rsa AAAAB3Nz...
+    storage:
+        layout:
+            name: direct
+    # network:
+    #     network:
+    #         version: 2
+    #         ethernets:
+    #             ens192:
+    #                 dhcp4: true
+    packages:
+    # these are optional
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg2
+        - software-properties-common
+        - unzip
+        - python3-pip
+        - openssh-server
+        - net-tools
+        - vim
+        - htop
+        - iftop
+        - dnsutils
+        - ncdu
+        - lsb-release
+    user-data:
+        disable_root: false
+        timezone: UTC
+    late-commands:
+        - sed -i -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /target/etc/ssh/sshd_config
+        - sed -i -e 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /target/etc/ssh/sshd_config
+        - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+        - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/ubuntu
+        - curtin in-target --target=/target -- apt-get update
+        - curtin in-target --target=/target -- apt-get upgrade --yes

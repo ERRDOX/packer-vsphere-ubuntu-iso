@@ -1,0 +1,50 @@
+# Final Template name and os type 
+vsphere_vm_name             = "ubuntu-2204-4-8-100G"
+vsphere_guest_os_type       = "ubuntu64Guest"
+
+# vm spec
+cpu_cores                   = 4
+disk_size                   = 102400        
+mem_size                    = 8192
+vm_firmware                 = "bios" 
+
+# Name or IP of you vCenter Server
+vsphere_server          = "" # completely empty string
+
+# vsphere username
+vsphere_username        = "" # default vsphere username: "administrator@vsphere.local"
+
+# vsphere password
+vsphere_password        = "" # completely empty string
+
+# vsphere datacenter name
+vsphere_datacenter      = "" # completely empty string
+vcenter_folder          = ""
+
+# name or IP of the ESXi host
+vsphere_host            = "" # completely empty string
+
+# vsphere network
+vsphere_network         = "" # completely empty string
+
+# vsphere datastore
+vsphere_datastore       = "" # completely empty string
+
+# cloud_init files for unattended configuration for Ubuntu
+cloudinit_userdata      = "./http/user-data"
+cloudinit_metadata      = "./http/meta-data"
+
+# iso file for Ubuntu
+#iso_file               = "ubuntu-22.04.3-live-server-amd64.iso"
+os_iso_checksum         = "10f19c5b2b8d6db711582e0e27f5116296c34fe4b313ba45f9b201a5007056cb"
+#iso_checksum_type      = "sha256"
+os_iso_url              = "https://releases.ubuntu.com/22.04.1/ubuntu-22.04.1-live-server-amd64.iso"
+
+# final clean up script
+shell_scripts           = ["./setup/setup.sh"]  # you can use two other options base on your needs
+ 
+# SSH username (created in user-data. If you change it here the please also adjust in ./html/user-data)
+ssh_username            = "ubuntu"
+
+# SSH password (created in autounattend.xml. If you change it here the please also adjust in ./html/user-data)
+ssh_password            = "" # set strong password 
